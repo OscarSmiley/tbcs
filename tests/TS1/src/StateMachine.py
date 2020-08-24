@@ -1,23 +1,31 @@
 #!bin/bash/python
-import rospy
-import std_msgs
+#import rospy
+#import std_msgs
+from testPreprocessor import Preprocessor
+
+
 
 #Contains a Preprocessor and current state and Postprocessor instances
 #Compairs the current state and the imput language input using a transition algorithm (Contained in the state object)
 #Decides to remain in the current state or transition to a new one
 #the post-transition state object then issues control arguments to the Postprocessor that publishes messages
 class StateMachine:
-    _STACKSIZE = 25 
     Continue = False
-    currentState = startState()
-    inProcessor = Preprocessor()
-    outProcessor = Postprocessor()
+    #currentState = startState()
+
+    #inProcessor = Preprocessor()    #test preprocessor loads state vectors from a sample file
+    #outProcessor = Postprocessor()
     inputVector = {}    #fsm input language
     outputVector = {}   #fsm output language
     history = []        #pushdown states
-    def __init__(self):
+    def __init__(self, testPreprocessor = None):
+        if(testPreprocessor != None):
+            inProcessor = testPreprocessor
+        else:
+            pass
+            #inProcessor = Preprocessor
         inputVector = inProcessor.getInputVector()
-        Continue = inputVector[systemStatus]
+        #Continue = inputVector[systemStatus]
 
     def runStates():
         while(Continue):

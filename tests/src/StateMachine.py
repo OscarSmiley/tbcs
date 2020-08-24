@@ -1,5 +1,5 @@
 #!bin/bash/python
-import rospy
+#import rospy
 import std_msgs
 
 #Contains a Preprocessor and current state and Postprocessor instances
@@ -7,9 +7,9 @@ import std_msgs
 #Decides to remain in the current state or transition to a new one
 #the post-transition state object then issues control arguments to the Postprocessor that publishes messages
 class StateMachine:
-    _STACKSIZE = 25 
     Continue = False
     currentState = startState()
+
     inProcessor = Preprocessor()
     outProcessor = Postprocessor()
     inputVector = {}    #fsm input language
