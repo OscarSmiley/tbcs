@@ -1,7 +1,12 @@
 #!bin/bash/python
+#python standard and ros
 #import rospy
 #import std_msgs
+import sys
+#Machine objects and state scripts
+sys.path.insert(1,'./stateScripts')
 from Preprocessor import Preprocessor
+from
 
 #Contains a Preprocessor and current state and Postprocessor instances
 #Compairs the current state and the imput language input using a transition algorithm (Contained in the state object)
@@ -9,14 +14,12 @@ from Preprocessor import Preprocessor
 #the post-transition state object then issues control arguments to the Postprocessor that publishes messages
 class StateMachine:
     Continue = True
-    #currentState = startState()
-
-    #inProcessor = Preprocessor()    #test preprocessor loads state vectors from a sample file
-    #outProcessor = Postprocessor()
+    outProcessor = Postprocessor() #default recieve/publish objects
+    inProcessor = Preprocessor()   #"
+    currentState = startState() #default state
     inputVector = {}    #fsm input language
     outputVector = {}   #fsm output language
     history = []        #pushdown states
-    inProcessor = Preprocessor()
     def __init__(self, testPreprocessor = None):
         if(testPreprocessor != None):
             self.inProcessor = testPreprocessor
