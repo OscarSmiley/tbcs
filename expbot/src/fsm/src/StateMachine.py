@@ -13,35 +13,39 @@
 import sys
 #Machine objects and state scripts
 sys.path.insert(1, sys.path[1] + '/stateScripts')
-print(sys.path)
 #package these up
 from startState import startState
 from Preprocessor import Preprocessor
 #from Postprocessor import Postprocessor
 class StateMachine:
-    Continue = True
-    #outProcessor = Postprocessor() #default recieve/publish objects
-    inProcessor = Preprocessor()   #"
-    currentState = startState() #default state
-    inputVector = {}    #fsm input language
-    outputVector = {}   #fsm output language
-    history = []        #pushdown states
     def __init__(self, testPreprocessor = None):
+        self.Continue = "Good"
+        #outProcessor = Postprocessor() #default recieve/publish objects
+        self.inProcessor = Preprocessor()
+        self.currentState = startState() #default state
+        self.inputVector = {}    #fsm input language
+        self.outputVector = {}   #fsm output language
+        self.history = []        #pushdown states
         if(testPreprocessor != None):
             self.inProcessor = testPreprocessor
         #inputVector = inProcessor.getInputVector()
         #print(inputVector)
 
     def runStates(self):
-        while(self.Continue == True):
-            inputVector = self.inProcessor.getInputVector()
-            print(inputVector)
+        cycleCount = 0
+        while(self.Continue == "Good"):
+            print(">> Cycle: ", cycleCount)
+            #self.currentState.testprint()
+            self.inputVector = self.inProcessor.getInputVector()
+            print("StateMachine input:", self.inputVector)
             #add methods later
-            '''currentState = currentState.getNext(inputVector, history)
-            outputVector = currentState.generateRequest()
-            outProcessor.generateMessages(outputVector)'''
-            self.Continue = inputVector["systemStatus"]
-        #currentState = statusExit()
+            self.currentState = self.currentState.getNext(self.inputVector, self.history)
+            self.outputVector = self.currentState.generateRequest()
+            print("StateMachine output:", self.outputVector)
+            #outProcessor.generateMessages(outputVector)
+            self.Continue = self.outputVector["systemStatus"]
+            cycleCount += 1
+
 
     def statusExit():
         #system cannot continue
