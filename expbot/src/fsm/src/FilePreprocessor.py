@@ -10,9 +10,6 @@ class Preprocessor:
             self.sampleData = f.read()
         self.lineposition = self.sampleData.index(";")
         self.inputKeys = self.sampleData[:self.lineposition].split(",")
-        #for char in self.sampleData:
-            #if (char == ';'):
-                #self.inputKeys = self.sampleData[:index(char)].split(",")
 
 
     def dataPrint(self):

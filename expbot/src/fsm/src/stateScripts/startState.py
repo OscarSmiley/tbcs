@@ -1,6 +1,6 @@
 #!bin/bash/python
 import sys
-import TestStates
+import TestStates1 as TestStates
 class startState:
 
     def __init__(self):

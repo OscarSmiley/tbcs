@@ -1,4 +1,5 @@
 #!bin/bash/python
+#import regex
 import sys
 class Preprocessor:
     lineposition = 0
@@ -45,3 +46,12 @@ class Preprocessor:
             #print(inputVector)
             return inputVector
         return None
+
+"""def main(args):
+    Preprocessor = testPreprocessor(args[0])
+    Preprocessor.dataPrint()
+    #testMachine = StateMachine(testPreprocessor)
+    #testMachine.runStates()
+    print("testPreprocessor main")
+if __name__ == '__main__':
+    main(sys.argv[1:])"""
