@@ -5,7 +5,7 @@ This is a description and brief guide to a control module being developed for AU
 ### Programming Decisions
 This module is primarily written in python. The decision to use python in this module was based on several factors:
 
-* JIT in the python interpreter should give us acceptable performance for this task.
+* The python interpreter and rospy should give us acceptable performance for this task.
 
 * Although python is not staticly typed it is strongly typed. Variable types are not declared on initialization, like in C++ or Java, but are restricted in their intermingling by the interpreter. The lack of static typing can be overcome with proper development practices.
 
