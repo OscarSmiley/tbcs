@@ -1,15 +1,17 @@
-#!bin/bash/python
+#import rospy
+#from std_msgs.msg import String
 import sys
 from FilePreprocessor import Preprocessor
 from StateMachine import StateMachine
-#Simple wrap up of the sub fsm. May change the "fatal" and "restart" options later. But they sound cool for now
+#Simple start/restart container for the fsm
+#May change the "fatal" and "restart" options later. But they sure look cool for now
 
 def main(args):
     while(True):
         #Restart loop
         inProcessor = Preprocessor(args[0])
-        inProcessor = Preprocessor(args[0])
         testMachine = StateMachine(inProcessor)
+        print("State machine Created. commencing runstates")
         Exit_Status = testMachine.runStates()
         if(Exit_Status == "Fatal"): #may want to make this the else catch all
             #call abort fuction

@@ -7,4 +7,4 @@
 # new environment variables
 
 # modified environment variables
-export PWD="/home/oscarmorrison/Documents/AUVIC/Misc_Env/expdfsa/expbot/build"
+export PWD='/home/oscarmorrison/Documents/AUVIC/Misc_Env/expdfsa/expbot/build'

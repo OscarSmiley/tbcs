@@ -185,6 +185,22 @@ include_directories(
 #   PATTERN ".svn" EXCLUDE
 # )
 
+#### Install python scripts ####
+catkin_install_python(PROGRAMS
+   scripts/FilePreprocessor.py
+   scripts/FsmController.py
+   scripts/History.py
+   scripts/Postprocessor.py
+   scripts/Preprocessor.py
+   scripts/StateMachine.py
+   scripts/stateScripts/startState.py
+   scripts/stateScripts/endState.py
+   scripts/stateScripts/test1.py
+   scripts/stateScripts/TestStates1.py
+   scripts/stateScripts/TestStates2.py
+   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+ )
+
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 # install(FILES
 #   # myfile1

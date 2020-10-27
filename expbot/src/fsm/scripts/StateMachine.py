@@ -7,26 +7,27 @@
 #   the post-transition state object then issues control arguments to the Postprocessor that publishes messages
 
 
-
-#python standard and ros
+#Ros
+#import rospy
+#from std_msgs.msg import String
+#System
 import sys
-#Machine objects and state scripts
-
+#State Scripts
 #Add ./stateScripts to the python path as an absolute filepath
 #   sys.path[0] current directory at runtime
 #   appends /stateScripts so sys.path[1] = ./stateScripts
 print(sys.path[0])
 sys.path.insert(1, sys.path[0] + '/stateScripts')
 print(sys.path[1])
-
 from startState import startState               #import the various python statescripts
+#Machine Objects
 from Preprocessor import Preprocessor
 from History import History                     #About half-done as of the moment
 #from Postprocessor import Postprocessor        #haven't made this thing yet
 Noisy = True                                    #kinda like ifdef DEBUG
 
 class StateMachine:
-    def __init__(self, testPreprocessor = None):
+    def __init__(self, extPreProcessor = None, extPostProcessor = None):
         STACKSIZE = 10                          #could be much larger for actual use
         self.Continue = "Good"
         #outProcessor = Postprocessor()         #default recieve/publish objects
@@ -35,8 +36,11 @@ class StateMachine:
         self.inputVector = {}                   #fsm input language
         self.outputVector = {}                  #fsm output language
         self.pushDownHistory = History(STACKSIZE)
-        if(testPreprocessor != None):
-            self.inProcessor = testPreprocessor
+        if(extPreProcessor != None):           #replace the pre-processor object with a test pre-processor if it is provided
+            self.inProcessor = extPreProcessor
+        if(extPostProcessor != None):           #replace the pre-processor object with a test pre-processor if it is provided
+            self.outProcessor = extPostProcessor
+
 
     def runStates(self):
         cycleCount = 0
