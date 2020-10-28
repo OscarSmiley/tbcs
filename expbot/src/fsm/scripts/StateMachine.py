@@ -8,15 +8,14 @@
 
 
 #Ros
-#import rospy
-#from std_msgs.msg import String
+import rospy
+from std_msgs.msg import String
 #System
 import sys
 #State Scripts
 #Add ./stateScripts to the python path as an absolute filepath
 #   sys.path[0] current directory at runtime
 #   appends /stateScripts so sys.path[1] = ./stateScripts
-print(sys.path[0])
 sys.path.insert(1, sys.path[0] + '/stateScripts')
 print(sys.path[1])
 from startState import startState               #import the various python statescripts
@@ -24,27 +23,38 @@ from startState import startState               #import the various python state
 from Preprocessor import Preprocessor
 from History import History                     #About half-done as of the moment
 #from Postprocessor import Postprocessor        #haven't made this thing yet
-Noisy = True                                    #kinda like ifdef DEBUG
+Noisy = True                                   #kinda like ifdef DEBUG
 
 class StateMachine:
     def __init__(self, extPreProcessor = None, extPostProcessor = None):
         STACKSIZE = 10                          #could be much larger for actual use
         self.Continue = "Good"
+
+        ## create machine objects ##
         #outProcessor = Postprocessor()         #default recieve/publish objects
         self.inProcessor = Preprocessor()
         self.currentState = startState()        #default state
         self.inputVector = {}                   #fsm input language
         self.outputVector = {}                  #fsm output language
         self.pushDownHistory = History(STACKSIZE)
+
+        ## check in processor ##
         if(extPreProcessor != None):           #replace the pre-processor object with a test pre-processor if it is provided
             self.inProcessor = extPreProcessor
         if(extPostProcessor != None):           #replace the pre-processor object with a test pre-processor if it is provided
             self.outProcessor = extPostProcessor
 
+        ## start ros node ##
+        self.debugpub = rospy.Publisher('debugpub', String, queue_size=10)
+
 
     def runStates(self):
         cycleCount = 0
-        while(self.Continue == "Good"):
+        rate = rospy.Rate(10)
+        while(self.Continue == "Good" and not rospy.is_shutdown()):
+            time_str = "runstates at %s" % rospy.get_time()
+            rospy.loginfo(time_str)
+            self.debugpub.publish(time_str)
             #run loop while the system is good
             #while the system is good, get input from the preprocessor, update the current state, and generate output
             self.inputVector = self.inProcessor.getInputVector()
@@ -57,7 +67,7 @@ class StateMachine:
                 print("StateMachine input:", self.inputVector)
                 print("StateMachine output:", self.outputVector)
             cycleCount += 1
-
+            rate.sleep()
         #Return the reason why the system is not good
         if(self.outputVector == "End"):
             return "Mission_Complete"

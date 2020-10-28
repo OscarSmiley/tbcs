@@ -1,4 +1,6 @@
-#import rospy
+#!/usr/bin/env python
+#^^ very important ^^
+import rospy
 #from std_msgs.msg import String
 import sys
 from FilePreprocessor import Preprocessor
@@ -7,11 +9,12 @@ from StateMachine import StateMachine
 #May change the "fatal" and "restart" options later. But they sure look cool for now
 
 def main(args):
+    rospy.init_node('statemachine', anonymous = True)
     while(True):
         #Restart loop
         inProcessor = Preprocessor(args[0])
         testMachine = StateMachine(inProcessor)
-        print("State machine Created. commencing runstates")
+        #rospy.loginfo("State machine Created. commencing runstates")
         Exit_Status = testMachine.runStates()
         if(Exit_Status == "Fatal"): #may want to make this the else catch all
             #call abort fuction
@@ -29,4 +32,7 @@ def main(args):
             pass
 
 if __name__ == '__main__':
+    #try:
     main(sys.argv[1:])
+    #except rospy.ROSInterruptException
+        #pass

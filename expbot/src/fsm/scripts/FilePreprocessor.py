@@ -12,12 +12,12 @@ class Preprocessor:
         self.inputKeys = self.sampleData[:self.lineposition].split(",")
 
 
-    def dataPrint(self):
+    """def dataPrint(self):
         print("input keys:")
         for key in self.inputKeys:
             print(key + " ", end="")
         print("\nsample data:\n" + self.sampleData)
-        print("lineposition =", self.lineposition)
+        print("lineposition =", self.lineposition)"""
 
     def getInputVector(self):
         VectorsAvalible = True

@@ -1,2 +1,7 @@
 /expbot/build/*
 /expbot/devel/*
+/expbot/src/fsm/scripts/*.pyc
+/expbot/src/fsm/scripts/__pycache__/*
+/expbot/src/fsm/scripts/stateScripts/*.pyc
+/expbot/src/fsm/scripts/stateScripts/__pycache__/*
+/tests/testworkspace/*
