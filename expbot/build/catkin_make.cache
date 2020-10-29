@@ -1,2 +1,0 @@
-fsm
--DCATKIN_DEVEL_PREFIX=/home/oscarmorrison/Documents/AUVIC/Misc_Env/expdfsa/expbot/devel -DCMAKE_INSTALL_PREFIX=/home/oscarmorrison/Documents/AUVIC/Misc_Env/expdfsa/expbot/install -G Unix Makefiles
