@@ -45,7 +45,7 @@ class StateMachine:
             self.outProcessor = extPostProcessor
 
         ## start ros node ##
-        self.debugpub = rospy.Publisher('debugpub', String, queue_size=10)
+        self.fsm_debugpub = rospy.Publisher('fsm_debugpub', String, queue_size=10)
 
 
     def runStates(self):
@@ -54,7 +54,7 @@ class StateMachine:
         while(self.Continue == "Good" and not rospy.is_shutdown()):
             time_str = "runstates at %s" % rospy.get_time()
             rospy.loginfo(time_str)
-            self.debugpub.publish(time_str)
+            self.fsm_debugpub.publish(time_str)
             #run loop while the system is good
             #while the system is good, get input from the preprocessor, update the current state, and generate output
             self.inputVector = self.inProcessor.getInputVector()

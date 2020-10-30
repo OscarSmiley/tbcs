@@ -10,3 +10,6 @@ __pycache__/
 
 # Ignore this test workspace
 /tests/testworkspace/*
+
+# Ignore untracked_documents directory
+untracked_documents/
