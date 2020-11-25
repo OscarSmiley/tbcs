@@ -1,35 +1,36 @@
-#!bin/bash/python
-#import rospy
-#import std_msgs
+import rospy
+from std_msgs.msg import String
+import sys
 
 #Object that takes control system subscriptions
 #And converts them to a standardized input language for the fsm
 #Adds abstraction between the fsm and and the robot systems
 class Preprocessor:
-    inputVector = {}
-    def __init__(self):
-        inputVector = {
-            #Continue signal
-            "systemStatus" : True,
-            #Position components
-            "X": 0,  #longitudinal
-            "Y": 0, #lateral
-            "Z": 0,  #vertical
-            #Velocity components
-            "Xvel": 0,
-            "Yvel": 0,
-            "Zvel": 0,
-            #X-Y plane, heading
-            "Bearing": 0,
-            #Object detection
-            "hasTarget"   : False, #nav has located sensor target
-            "targetX"     : 0, #Vertical in sensor image
-            "targetY"     : 0, #Horizontal in sensor image
-            "targetRange" : 0, #detected distance to target
-        }
+    def __init__(self, externalPublishers):
+        self.currentData = {}
+        self.listeners = {}
+        for pub in externalPublishers:
+            ##
+            # Create subscriber for each publsher key.
+            # Subscriber class updatekey when a new message is published, passes arguments currentData and key as args[0,1]
+            # Update key addes the most recent key to the currentData dictionary
+            # when .getInputVector is called the current dictionary is returned
+            ##
+            self.listeners[pub + "_listener"] = rospy.Subscriber(key, String, updatekey, (self.currentData, key))
 
+        ### debug code ###
+        for listener in self.listeners:
+            print(">>> " + listener)        #print listener key name
+            print(self.listeners[listener]) #print listener object
+
+
+    def updatekey(data, args):
+        data_dictionary = args[0]
+        publisher_key = args[1]
 
     def getInputVector(self):
-        #takes subscription services and creates an output vector (Dictionary)
+        return self.currentData
+        #takes a snapshot of what data is published at approximatly the present time
 
-        return self.inputVector
+### Notes ###
+# May want to change the scheme from constant updating to a scanning sort of process if it is possible

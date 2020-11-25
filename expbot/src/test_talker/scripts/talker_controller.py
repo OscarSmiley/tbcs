@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import rospy
 from std_msgs.msg import String
-
 import sys
 from Fileprocessor import Preprocessor
 from Datapublisher import Datapublisher
@@ -13,6 +12,8 @@ from Datapublisher import Datapublisher
 #####
 
 def main(args):
+    #args: location of test sampledata file
+
     #create ros node and debuging publisher
     rospy.init_node('testtalker', anonymous = True)
     talker_debugpub = rospy.Publisher('talker_debugpub', String, queue_size=10)
@@ -22,20 +23,17 @@ def main(args):
     Fileprocessor = Preprocessor(args[0])
     Publisher = Datapublisher(Fileprocessor.getKeys())
 
-    #slighty better than quickly pressing Ctrl C in terminal :)
-    cyclelimiter = 10
-    while(not rospy.is_shutdown() and cyclelimiter > 0):
+    while(not rospy.is_shutdown()):
         #debug timestamp
         time_str = "test_talker at %s" % rospy.get_time()
-        rospy.loginfo(time_str)
+        #rospy.loginfo(time_str)
         talker_debugpub.publish(time_str)
 
         #publish each item in the dictionary in a seperate publisher
         sense_dictionary = Fileprocessor.getInputVector()
         Publisher.publish_data(sense_dictionary)
 
-        print("\n")
-        cyclelimiter -= 1
+        #print("\n")
         rate.sleep()
 
 if __name__ == '__main__':
