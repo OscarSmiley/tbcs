@@ -6,29 +6,40 @@ import sys
 #And converts them to a standardized input language for the fsm
 #Adds abstraction between the fsm and and the robot systems
 class Preprocessor:
-    def __init__(self, externalPublishers):
+    def __init__(self):
         self.currentData = {}
-        self.listeners = {}
-        for pub in externalPublishers:
-            ##
-            # Create subscriber for each publsher key.
-            # Subscriber class updatekey when a new message is published, passes arguments currentData and key as args[0,1]
-            # Update key addes the most recent key to the currentData dictionary
-            # when .getInputVector is called the current dictionary is returned
-            ##
-            self.listeners[pub + "_listener"] = rospy.Subscriber(key, String, updatekey, (self.currentData, key))
+        self.subscribers = {} #these gotta be keyed because ros doesn't seem to provide a way to get the name of a publisher object
+        self.publishers = {}
+        ioFile = open("src/fsm/fsm.txt", "r")
+        pubsSubs = ioFile.readlines()
+        rospy.loginfo(pubsSubs)
+        for line in pubsSubs:
+            if line[0] == '#':
+                pass
+            elif line[0] == ">":
+                subName = line[1:].strip()
+                self.subscribers[subName] = rospy.Subscriber(subName, String, self.callback, (self.currentData, subName))
+            elif line[0] == "<":
+                pubName = line[1:].strip()
+                self.publishers[pubName] = rospy.Publisher(pubName, String, queue_size=10)
+            else:
+                print("invalid io manifest file")
 
-        ### debug code ###
-        for listener in self.listeners:
-            print(">>> " + listener)        #print listener key name
-            print(self.listeners[listener]) #print listener object
+        rospy.loginfo(self.publishers)
 
-
-    def updatekey(data, args):
-        data_dictionary = args[0]
-        publisher_key = args[1]
+    #callback fuction   constantly being called when new data is being published
+    #need a way to pass self argument so currentData can be updated across the object
+    ##Subscriber callbacks:
+    #   All subscriber callbacks come here. Subscriber name is identified by args[1] fsm dictionary in args[0]
+    def callback(self, data, args):
+        #print("callback" + args[1])
+        dictOut = args[0]
+        callerId = args[1]
+        rospy.loginfo(data.data)
+        #rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
 
     def getInputVector(self):
+        rospy.sleep(2)
         return self.currentData
         #takes a snapshot of what data is published at approximatly the present time
 

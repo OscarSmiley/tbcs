@@ -10,7 +10,7 @@ class Datapublisher:
             #rawIo = f.read()
         self.subscribers = {} #these gotta be keyed because ros doesn't seem to provide a way to get the name of a publisher object
         self.publishers = {}
-        ioFile = open("test_talker.txt", "r")
+        ioFile = open("src/test_talker/test_talker.txt", "r")
         pubsSubs = ioFile.readlines()
         rospy.loginfo(pubsSubs)
         for line in pubsSubs:

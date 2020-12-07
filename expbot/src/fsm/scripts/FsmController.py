@@ -12,8 +12,8 @@ def main(args):
     rospy.init_node('statemachine', anonymous = True)
     while(True):
         #Restart loop
-        inProcessor = Preprocessor(args[0])
-        testMachine = StateMachine(inProcessor)
+        #inProcessor = Preprocessor(args[0])
+        testMachine = StateMachine()
         #rospy.loginfo("State machine Created. commencing runstates")
         Exit_Status = testMachine.runStates()
         if(Exit_Status == "Fatal"): #may want to make this the else catch all

@@ -1,0 +1,5 @@
+#fsm publish/subscribe manifest
+>systemStatus
+>key1
+>key2
+>ket3
