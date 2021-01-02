@@ -1,4 +1,5 @@
 import sys
+import os
 import rospy
 from std_msgs.msg import String
 import re
@@ -10,7 +11,8 @@ class Datapublisher:
             #rawIo = f.read()
         self.subscribers = {} #these gotta be keyed because ros doesn't seem to provide a way to get the name of a publisher object
         self.publishers = {}
-        ioFile = open("src/test_talker/test_talker.txt", "r")
+        ioFilePath = os.path.abspath(os.getcwd()) + "/src/test_talker/io.txt"
+        ioFile = open(ioFilePath, "r")
         pubsSubs = ioFile.readlines()
         rospy.loginfo(pubsSubs)
         for line in pubsSubs:
@@ -33,6 +35,7 @@ class Datapublisher:
         for item in datavector:
             if item in self.publishers and type(datavector[item]) is str:
                 outstr = datavector[item] + ", time=%s"  % rospy.get_time()
+                #print("publish --> " + outstr)
                 self.publishers[item].publish(outstr)
                 #print(self.publishers[item])
                 #rospy.loginfo(outstr)

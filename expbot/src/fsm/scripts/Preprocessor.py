@@ -1,6 +1,10 @@
 import rospy
 from std_msgs.msg import String
 import sys
+import os
+
+### Notes ###
+# May want to change the scheme from constant updating to a scanning sort of process if it is possible
 
 #Object that takes control system subscriptions
 #And converts them to a standardized input language for the fsm
@@ -8,9 +12,14 @@ import sys
 class Preprocessor:
     def __init__(self):
         self.currentData = {}
-        self.subscribers = {} #these gotta be keyed because ros doesn't seem to provide a way to get the name of a publisher object
+        self.subscribers = {} #keyed for local naming
         self.publishers = {}
-        ioFile = open("src/fsm/fsm.txt", "r")
+        #
+        #   Should find a way to do locate the io file regardless of start directory.
+        #   Or possibly lock down the run location using a launchfile (unsure about this possibility)
+        #
+        ioFilePath = os.path.abspath(os.getcwd()) + "/src/fsm/io.txt"
+        ioFile = open(ioFilePath, "r")
         pubsSubs = ioFile.readlines()
         rospy.loginfo(pubsSubs)
         for line in pubsSubs:
@@ -35,13 +44,15 @@ class Preprocessor:
         #print("callback" + args[1])
         dictOut = args[0]
         callerId = args[1]
-        rospy.loginfo(data.data)
-        #rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
+        #rospy.loginfo(data.data)
+        #rospy.loginfo(rospy.get_caller_id() + " I heard %s", data.data)
+
 
     def getInputVector(self):
         rospy.sleep(2)
         return self.currentData
         #takes a snapshot of what data is published at approximatly the present time
 
-### Notes ###
-# May want to change the scheme from constant updating to a scanning sort of process if it is possible
+    def __is_full(dictionary):
+        #check the contents of a dictionary against a list of expected keys
+        pass

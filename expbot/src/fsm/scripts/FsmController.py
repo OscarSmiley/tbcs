@@ -1,8 +1,13 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #^^ very important ^^
 import rospy
-#from std_msgs.msg import String
+from std_msgs.msg import String
 import sys
+import os
+#not sure why I have to do this in noetic, might need to use an __init__.py file or something
+#sys.path.insert(0, os.path.abspath(os.getcwd()))
+#print(sys.path[0])
+
 from FilePreprocessor import Preprocessor
 from StateMachine import StateMachine
 #Simple start/restart container for the fsm

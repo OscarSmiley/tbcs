@@ -160,7 +160,7 @@ include_directories(
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
 # catkin_install_python(PROGRAMS
-#   scripts/my_python_script
+#   scripts/FsmController.py
 #   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 # )
 
@@ -184,22 +184,6 @@ include_directories(
 #   FILES_MATCHING PATTERN "*.h"
 #   PATTERN ".svn" EXCLUDE
 # )
-
-#### Install python scripts ####
-catkin_install_python(PROGRAMS
-   scripts/FilePreprocessor.py
-   scripts/FsmController.py
-   scripts/History.py
-   scripts/Postprocessor.py
-   scripts/Preprocessor.py
-   scripts/StateMachine.py
-   scripts/stateScripts/startState.py
-   scripts/stateScripts/endState.py
-   scripts/stateScripts/test1.py
-   scripts/stateScripts/TestStates1.py
-   scripts/stateScripts/TestStates2.py
-   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
- )
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 # install(FILES

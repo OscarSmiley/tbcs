@@ -1,4 +1,4 @@
-#!bin/bash/python
+#!/usr/bin/env python3
 import sys
 class Preprocessor:
     lineposition = 0
