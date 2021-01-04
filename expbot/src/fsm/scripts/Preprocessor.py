@@ -11,7 +11,7 @@ import os
 #Adds abstraction between the fsm and and the robot systems
 class Preprocessor:
     def __init__(self):
-        self.currentData = {}
+        self.currentData = {"testkey" : "test"}
         self.subscribers = {} #keyed for local naming
         self.publishers = {}
         #
@@ -41,15 +41,17 @@ class Preprocessor:
     ##Subscriber callbacks:
     #   All subscriber callbacks come here. Subscriber name is identified by args[1] fsm dictionary in args[0]
     def callback(self, data, args):
+        #print("preprocessor callback")
         #print("callback" + args[1])
         dictOut = args[0]
         callerId = args[1]
-        #rospy.loginfo(data.data)
-        #rospy.loginfo(rospy.get_caller_id() + " I heard %s", data.data)
-
+        dictOut[callerId] = data.data #placeholder line, should be converted to string. That may cause bad callbacks
+        self.currentData[callerId] = data.data
+        #print(dictOut)
 
     def getInputVector(self):
-        rospy.sleep(2)
+        #rospy.sleep(2)
+        print("getInputVector", self.currentData)
         return self.currentData
         #takes a snapshot of what data is published at approximatly the present time
 

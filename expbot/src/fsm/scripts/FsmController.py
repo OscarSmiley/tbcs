@@ -19,8 +19,9 @@ def main(args):
         #Restart loop
         #inProcessor = Preprocessor(args[0])
         testMachine = StateMachine()
-        #rospy.loginfo("State machine Created. commencing runstates")
-        Exit_Status = testMachine.runStates()
+        Exit_Status = "Fatal"
+        if(testMachine.startup()):
+            Exit_Status = testMachine.runStates()
         if(Exit_Status == "Fatal"): #may want to make this the else catch all
             #call abort fuction
             #test print statement

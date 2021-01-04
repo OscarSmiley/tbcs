@@ -12,6 +12,7 @@ import rospy
 from std_msgs.msg import String
 #System
 import sys
+import time
 #State Scripts
 #Add ./stateScripts to the python path as an absolute filepath
 #   sys.path[0] current directory at runtime
@@ -46,6 +47,14 @@ class StateMachine:
 
         ## start ros node ##
         self.fsm_debugpub = rospy.Publisher('fsm_debugpub', String, queue_size=10)
+
+    def startup(self):
+        #gives preprocessor time to load as full a dictionary as possible before runstates
+        #could be as simple as this and tune it in
+        rospy.sleep(1)
+        print("startup complete")
+        return(True)
+        #otherwise do some sort of slow polling with __is_full or something similar
 
 
     def runStates(self):
