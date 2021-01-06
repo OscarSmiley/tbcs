@@ -4,12 +4,11 @@ import rospy
 from std_msgs.msg import String
 import re
 class Datapublisher:
-    def __init__(self, datakeys):
+    def __init__(self, datakeys, ioFilePath):
         #read the test_talker.txt file and load a list of publishers and a list of subscribers
         #create a dictionary for the realion of publishers to data keys
         self.subscribers = {} #these gotta be keyed because ros doesn't seem to provide a way to get the name of a publisher object
         self.publishers = {}
-        ioFilePath = os.path.abspath(os.getcwd()) + "/src/test_talker/io.txt"
         ioFile = open(ioFilePath, "r")
         pubsSubs = ioFile.readlines()
         rospy.loginfo(pubsSubs)

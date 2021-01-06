@@ -1,0 +1,1 @@
+systemStatus,y,x;Good,50,50;Good,45,50;Good,41,50;Good,36,50;Good,34,50;Good,30,50;Good,22,50;Good,14,50;Good,2,50;Good,5,50;Good,13,50;Good,23,50;Good,29,50;Good,34,50;Good,38,50;Good,44,50;Good,46,50;Good,48,50;
