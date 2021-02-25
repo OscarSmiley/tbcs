@@ -10,7 +10,7 @@ import os
 #And converts them to a standardized input language for the fsm
 #Adds abstraction between the fsm and and the robot systems
 class Preprocessor:
-    def __init__(self):
+    def __init__(self, io):
         self.currentData = {}
         self.subscribers = {} #keyed for local naming
         self.publishers = {}
@@ -18,7 +18,8 @@ class Preprocessor:
         #   Should find a way to do locate the io file regardless of start directory.
         #   Or possibly lock down the run location using a launchfile (maybe?)
         #
-        ioFilePath = os.path.abspath(os.getcwd()) + "/src/fsm/io.txt"
+        #ioFilePath = os.path.abspath(os.getcwd()) + "/src/fsm/io.txt"
+        ioFilePath  = os.path.abspath(os.getcwd()) + io
         ioFile = open(ioFilePath, "r")
         pubsSubs = ioFile.readlines()
         rospy.loginfo(pubsSubs)

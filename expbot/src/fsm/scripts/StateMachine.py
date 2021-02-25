@@ -12,28 +12,28 @@ import rospy
 from std_msgs.msg import String
 #System
 import sys
+import os
 import time
 #State Scripts
-#Add ./stateScripts to the python path as an absolute filepath
-#   sys.path[0] current directory at runtime
-#   appends /stateScripts so sys.path[1] = ./stateScripts
-sys.path.insert(1, sys.path[0] + '/stateScripts')
-print(sys.path[1])
-from startState import startState               #import the various python statescripts
 #Machine Objects
 from Preprocessor import Preprocessor
-from History import History                     #About half-done as of the moment
-#from Postprocessor import Postprocessor        #haven't made this thing yet
-Noisy = True                                   #kinda like ifdef DEBUG
+from History import History
+Noisy = True       #kinda like ifdef DEBUG
 
 class StateMachine:
-    def __init__(self, extPreProcessor = None, extPostProcessor = None):
+    def __init__(self, stateScriptPath, ioManifestLocation, extPreProcessor = None, extPostProcessor = None):
+        sys.path.insert(1, os.path.abspath(os.getcwd()) + stateScriptPath)                      #may want a try block here
+        try:
+            from startState import startState
+        except:
+            print("Invalid relative stateScript location")
+
         STACKSIZE = 10                          #could be much larger for actual use
         self.Continue = "Good"
 
         ## create machine objects ##
         #outProcessor = Postprocessor()         #default recieve/publish objects
-        self.inProcessor = Preprocessor()
+        self.inProcessor = Preprocessor(ioManifestLocation)
         self.currentState = startState()        #default state
         self.inputVector = {}                   #fsm input language
         self.outputVector = {}                  #fsm output language
@@ -52,6 +52,7 @@ class StateMachine:
         #gives preprocessor time to load as full a dictionary as possible before runstates
         #could be as simple as this and tune it in
         rospy.sleep(1)
+        #self.inputVector["systemStatus"] = "Good"
         print("startup complete")
         return(True)
         #otherwise do some sort of slow polling with __is_full or something similar

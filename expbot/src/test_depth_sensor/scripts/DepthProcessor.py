@@ -16,7 +16,7 @@ def main(args):
     while(not rospy.is_shutdown()):
         depthVector = depthInput.getInputVector()
         depthFrame = "{}".format(depthVector["xdepth"])
-        print("FRAME: ", depthFrame)
+        #print("FRAME: ", depthFrame)
         depthPublisher.publish_data({"depthFrame" : depthFrame})
         rate.sleep()
 

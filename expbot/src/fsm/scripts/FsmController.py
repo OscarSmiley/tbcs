@@ -18,18 +18,16 @@ def main(args):
     while(True):
         #Restart loop
         #inProcessor = Preprocessor(args[0])
-        testMachine = StateMachine()
+        testMachine = StateMachine(args[0], args[1])         #FsmController needs a path to the state script file
         Exit_Status = "Fatal"
         if(testMachine.startup()):
             Exit_Status = testMachine.runStates()
-        if(Exit_Status == "Fatal"): #may want to make this the else catch all
+        if(Exit_Status == "Fatal"):                  #may want to make this the else catch all
             #call abort fuction
-            #test print statement
             print("Fatal Exit")
             break
         elif(Exit_Status == "Mission_Complete"):
             #shutdown fuction
-            #test print statement
             print("Complete Exit")
             break
         elif(Exit_Status == "Restart"):

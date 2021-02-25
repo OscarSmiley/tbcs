@@ -17,7 +17,7 @@ def main(args):
         #cameraFrame = ("%s,%s", cameraInput.getInputVector()["x"],cameraInput.getInputVector()["x"])
         cameraVector = cameraInput.getInputVector()
         cameraFrame = "{},{}".format(cameraVector["x"], cameraVector["y"])
-        print("FRAME: ", cameraFrame)
+        #print("FRAME: ", cameraFrame)
         cameraPublisher.publish_data({"cameraframe" : cameraFrame})
         rate.sleep()
 
