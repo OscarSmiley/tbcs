@@ -1,6 +1,3 @@
-#!bin/bash/python
-#import rospy
-#from std_msg.msg import String
 class Postprocessor:
     def __init__(self):
         pub = rospy.Publisher('chatter', String, queue_size=10)

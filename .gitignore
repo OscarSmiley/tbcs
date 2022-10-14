@@ -13,3 +13,6 @@ __pycache__/
 
 # Ignore untracked_documents directory
 untracked_documents/
+
+# Ignore vscode files
+.vscode
