@@ -18,25 +18,25 @@ def main(args):
     while(True):
         #Restart loop
         #inProcessor = Preprocessor(args[0])
-        testMachine = StateMachine(args[0], args[1])         #FsmController needs a path to the state script file
-        Exit_Status = "Fatal"
-        if(testMachine.startup()):
-            Exit_Status = testMachine.runStates()
-        if(Exit_Status == "Fatal"):                  #may want to make this the else catch all
+        workingMachine = StateMachine(args[1], args[2])         #FsmController needs a path to the state script file
+        exitStatus = "Fatal"
+        if(workingMachine.startup()):
+            exitStatus = workingMachine.runStates()
+        if(exitStatus == "Fatal"):                  #may want to make this the else catch all
             #call abort fuction
             print("Fatal Exit")
             break
-        elif(Exit_Status == "Mission_Complete"):
+        elif(exitStatus == "Mission_Complete"):
             #shutdown fuction
             print("Complete Exit")
             break
-        elif(Exit_Status == "Restart"):
+        elif(exitStatus == "Restart"):
             #make system log entry and attempt to restart the control module
             print("FSM Restart")
             pass
 
 if __name__ == '__main__':
     #try:
-    main(sys.argv[1:])
+    main(sys.argv)
     #except rospy.ROSInterruptException
         #pass

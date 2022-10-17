@@ -22,6 +22,11 @@ Noisy = True       #kinda like ifdef DEBUG
 
 class StateMachine:
     def __init__(self, stateScriptPath, ioManifestLocation, extPreProcessor = None, extPostProcessor = None):
+        
+        #add some extra slashes
+        stateScriptPath = "/" + stateScriptPath 
+        ioManifestLocation = "/" + ioManifestLocation
+        
         sys.path.insert(1, os.path.abspath(os.getcwd()) + stateScriptPath)                      #may want a try block here
         try:
             from startState import startState
